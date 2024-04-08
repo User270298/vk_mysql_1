@@ -1,0 +1,31 @@
+-- SELECT
+--  users.firstname,
+--  users.lastname,
+--  users.phone,
+--   COUNT(DISTINCT communities.id) AS group_count
+-- FROM users 
+-- LEFT JOIN users_communities 
+--  ON users.id = users_communities.user_id
+-- LEFT JOIN communities 
+--  ON users_communities.community_id = communities.id
+-- GROUP BY
+--  users.id;
+
+-- SELECT
+--  communities.name,
+--  COUNT(users.id) AS user_count
+-- FROM communities 
+-- LEFT JOIN users_communities 
+--  ON communities.id = users_communities.community_id
+-- LEFT JOIN users 
+--  ON users_communities.community_id = users.id
+-- GROUP BY
+--  communities.id;
+
+SELECT  to_user_id, count(*) as 'Count message'
+from messages
+where to_user_id in (select to_user_id
+					from messages
+                    where from_user_id)
+group by to_user_id
+order by 'count message' desc;
